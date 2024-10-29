@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/html" src="jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            
+            background-color: black;
+        }
+
+        .wrapper {
+            max-width: 1320px;
+            width: 100%;
+            position: relative;
+
+        }
+
+        .wrapper i {
+            height: 50px;
+            width: 50px;
+            /* background: rgb(118, 233, 118); */
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            font-size: 1.25 rem;
+            transform: translateY(-50%);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.23);
+
+        }
+
+        .wrapper i:first-child {
+            left: -22px;
+
+        }
+
+        .wrapper i:last-child {
+            right: -22px;
+
+        }
+
+        .wrapper .carousel {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: calc((100% / 4) - 12px);
+            gap: 16px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            scrollbar-width: 0;
+        }
+
+        .carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .carousel :where(.card, .img) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel.dragging {
+            scroll-snap-type: none;
+            scroll-behavior: auto;
+        }
+
+        .carousel.no-transition {
+            scroll-behavior: auto;
+        }
+
+        .carousel.dragging .card {
+            cursor: grab;
+            user-select: none;
+        }
+
+        .carousel .card {
+            scroll-snap-align: start;
+            height: 390px;
+            list-style: none;
+            background: #fff;
+            border-radius: 8px;
+            display: flex;
+            cursor: pointer;
+            width: 98%;
+            padding-bottom: 15px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .card .img {
+
+            width: 100%;
+            height: 100%
+        }
+
+        .card .img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-top: 14px;
+
+            border: 4px solid #fff;
+        }
+
+        .card h2 {
+            font-weight: 500;
+            font-size: 1.56rem;
+            margin: 30px 0 5px;
+        }
+
+        .card span {
+            color: #6a6d78;
+            font-size: 1.31rem;
+
+        }
+
+        @media screen and (max-width: 900px) {
+            .wrapper .carousel {
+                grid-auto-columns: calc((100% / 2) - 9px);
+
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .wrapper .carousel {
+                grid-auto-columns: 100%;
+
+            }
+        }
+
+        .slide {
+            display: flex;
+            
+            justify-content: center;
+            
+            padding: 0 35px;
+           
+            
+        }
+        .event-div{
+            margin: 20px 30px;
+        }
+        .event-page{
+            font-size: 40px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .art-container1{
+            background-image: url(image/alen1.jpg);
+    background-size: cover;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    border: 2px solid white;
+            border-radius: 15px;
+            margin:0px;
+            /* background-size: contain; */
+            width: 100%;
+            height:84%;
+           
+        }
+        .art-container2{
+            border: 2px solid white;
+            background-image: url(image/imagin_dragons.jpg);
+    background-size: cover;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    
+    border-radius: 15px;
+    width: 100%;
+    height: 300px;
+    
+
+           
+        }
+        .art-container3{
+            position: relative;
+            border: 2px solid white;
+            border-radius: 15px;
+        
+
+            background-image: url(image/starboy.jpg);
+    background-size: cover;
+    object-fit: cover;
+    background-repeat: no-repeat;
+            width: 100%;
+            height: 260px;
+            
+            margin-top: 25px;
+        }
+        
+.card_box {
+    margin: 0px 137px;
+    width: 420px;
+    height: 420px;
+  border-radius: 20px;
+  background: linear-gradient(170deg, rgba(58, 56, 56, 0.623) 0%, rgb(31, 31, 31) 100%);
+  position: relative;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.55);
+  cursor: pointer;
+
+  transition: all .3s;
+}
+
+.card_box:hover {
+  transform: scale(0.9);
+}
+
+.card_box span {
+  position: absolute;
+  overflow: hidden;
+  width: 150px;
+  height: 150px;
+  top: -10px;
+  left: -10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card_box span::before {
+  content: 'Premium';
+  position: absolute;
+  width: 150%;
+  height: 40px;
+  background-image: linear-gradient(45deg, #ff6547 0%, #ffb144  51%, #ff7053  100%);
+  transform: rotate(-45deg) translateY(-20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.23);
+}
+
+.card_box span::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  bottom: 0;
+  left: 0;
+  height: 10px;
+  z-index: -1;
+  box-shadow: 140px -140px #cc3f47;
+  background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
+}
+.adds li{
+    list-style: none;
+    padding: 20px 60px;
+}
+.info-but{
+    width: 70px;
+    height: 40px;
+    background-color: transparent;
+    border: 2px solid white;
+    color: #fff;
+}
+.ticket-but{
+    width: 70px;
+    height: 40px;
+    background-color: #fff;
+    color: black;
+}
+
+/* common */
+.show {
+    background-color: black;
+}
+    </style>
+</head>
+
+<body>
+    <section style="background-image: url('image/background.jpg'); height: 700px; background-size:cover;">
+        <header>
+            <nav class="navbar navbar-expand-lg  mx-5">
+                <div class="container-fluid border border-white" style="height: 70px; border-radius: 50px; align-items: center;">
+                    <a class="navbar-brand" href="#">
+                        <img src="image/logo.png" alt="logo" width="0px" height="100px" style="z-index: 10px;">
+                        <span  class="text-white">Music Freaks</span>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="background-color: white;">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse " id="navbarNav" style="justify-content: center;">
+                        <ul class="navbar-nav">
+                            <li class="nav-item p-3">
+                                <a class="nav-link fs-5 text-white" aria-current="page" href="home.html">Home</a>
+                            </li>
+                            <li class="nav-item p-3 text-white">
+                                <a class="nav-link fs-5 text-white" href="event.php">Events</a>
+                            </li>
+                            <li class="nav-item p-3">
+                                <a class="nav-link fs-5 text-white" href="ContactUs.html">ContactUs</a>
+                            </li>
+                            <li class="nav-item p-3">
+                                <a class="nav-link fs-5 text-white " href="gallery.html">Gallery</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="container-fluid "
+            style="z-index: 10; color: azure; font-size: px !important; display: flex; justify-content: center; text-align: center; margin-top: 200px;">
+            <h1 style="font-size: 80px; font-weight: 900;"> Welcome to the Concert </h1>
+        </div>
+
+    </section>
+   
+
+
+    <section class="">
+        <div class="row event-div">
+            <h1 class="event-page">Upcoming Events and Festivals</h1>
+    
+        </div>
+        <div class="slide">
+            <div class="wrapper">
+                <i id="left" class="fa-solid  fas fa-angle-left"></i>
+                <ul class="carousel">
+                    <li class="">
+                        <div class="card" style="position: relative;">
+                            <div class="img" style="position: absolute;"><img src="image/background.jpg" alt=""
+                                    draggable="false">
+    
+                                <div style="position: absolute; color: #fff; float: left; left: 20px; bottom: 25px;">
+    
+                                    <h2>Imagine Dragons</h3>
+                                        <h6>wednesday,july3,2024</h6>
+                                        <h6>USA</h6>
+                                        <div style="display: flex; justify-content: space-between; margin: 0px 20px;">
+                                            <button class="info-but">
+                                                info
+                                            </button>
+                                            <button class="ticket-but">
+                                                Tickets
+                                            </button>
+                                        </div>
+                                </div>
+                            </div>
+    
+                        </div>
+    
+                    </li>
+                    <li class="">
+                        <div class="card" style="position: relative;">
+                            <div class="img" style="position: absolute;"><img src="image/background1.jpg" alt=""
+                                    draggable="false">
+    
+                                <div style="position: absolute; color: #fff; float: left; left: 20px; bottom: 25px;">
+    
+                                    <h2>Starboy</h3>
+                                        <h6>sunday,20sep,2024</h6>
+                                        <h6>Italy</h6>
+                                        <div style="display: flex; justify-content: space-between; margin: 0px 20px;">
+                                            <button class="info-but">
+                                                info
+                                            </button>
+                                            <button class="ticket-but">
+                                                Tickets
+                                            </button>
+                                        </div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </li>
+                    <li class="">
+                        <div class="card" style="position: relative;">
+                            <div class="img" style="position: absolute;"><img src="image/background2.jpg" alt=""
+                                    draggable="false">
+    
+                                <div style="position: absolute; color: #fff; float: left; left: 20px; bottom: 25px;">
+    
+                                    <h2>Coldplay</h3>
+                                        <h6>Monday,september29,2024</h6>
+                                        <h6>USA</h6>
+                                        <div style="display: flex; justify-content: space-between; margin: 0px 20px;">
+                                            <button class="info-but">
+                                                info
+                                            </button>
+                                            <button class="ticket-but">
+                                                Tickets
+                                            </button>
+                                        </div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </li>
+                    <li class="">
+                        <div class="card" style="position: relative;">
+                            <div class="img" style="position: absolute;"><img src="image/background3.jpg" alt=""
+                                    draggable="false">
+    
+                                <div style="position: absolute; color: #fff; float: left; left: 20px; bottom: 25px;">
+    
+                                    <h2>Billie Eillish</h3>
+                                        <h6>sunday,october 3,2024</h6>
+                                        <h6>USA</h6>
+                                        <div style="display: flex; justify-content: space-between; margin: 0px 20px;">
+                                            <button class="info-but">
+                                                info
+                                            </button>
+                                            <button class="ticket-but">
+                                                Tickets
+                                            </button>
+                                        </div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </li>
+                    <li class="">
+                        <div class="card" style="position: relative;">
+                            <div class="img" style="position: absolute;"><img src="image/background4.jpg" alt=""
+                                    draggable="false">
+    
+                                <div style="position: absolute; color: #fff; float: left; left: 20px; bottom: 25px;">
+    
+                                    <h2>Alan Walker</h3>
+                                        <h6>wednesday,october 14,2024</h6>
+                                        <h6>USA</h6>
+                                        <div style="display: flex; justify-content: space-between; margin: 0px 20px;">
+                                            <button class="info-but">
+                                                info
+                                            </button >
+                                            <button class="ticket-but">
+                                                Tickets
+                                            </button>
+                                        </div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </li>
+                    <li class="">
+                        <div class="card" style="position: relative;">
+                            <div class="img" style="position: absolute;"><img src="image/background5.jpeg" alt=""
+                                    draggable="false">
+    
+                                <div style="position: absolute; color: #fff; float: left; left: 20px; bottom: 25px;">
+    
+                                    <h2>Imagine Dragons</h3>
+                                        <h6>wednesday,july3,2024</h6>
+                                        <h6>USA</h6>
+                                        <div style="display: flex; justify-content: space-between; margin: 0px 20px;">
+                                            <button>
+                                                info
+                                            </button>
+                                            <button>
+                                                Tickets
+                                            </button>
+                                        </div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </li>
+                </ul>
+                <i id="right" class="fa-solid fas fa-angle-right"></i>
+            </div>
+        </div>
+        
+
+    </section>
+    <section>
+        <div class="container-fluid">
+            <div class="row">
+                <h2 style="color: white; margin:50px 30px;">Your Favourite Artist</h2>
+            </div>
+            <div class="row"  style="height: 700px; width: 80%;margin: 2% 9%;">
+                <div class="col-md-6">
+                    <div class="art-container1">
+                        <!-- <img src="image/background.jpg"> -->
+                         
+                    </div>
+                </div>
+                <div class="col-md-6 " >
+                    <div class="art-container2">
+                        <!-- <img src="image/background.jpg"> -->
+
+
+                    </div>
+                    <div class="art-container3">
+                       
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+    <section style="margin-top: 20px;">
+        
+        
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card_box">
+                        <span>
+                           
+                        </span>
+                        <div style="position: absolute; top: 28px; padding: 30px;">
+                            <center><h1 style="color: #cc3f47;">Imagine Dragons</h1></center>
+                            <p style="color: #fff;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque architecto, doloremque commodi at ducimus repudiandae quibusdam repellendus aspernatur, hic natus fuga debitis id laudantium magnam eligendi unde consequuntur? Dolores cupiditate ipsa non minima, quasi ut rerum illum adipisci quas quibusdam quidem placeat dolore quae praesentium laudantium. Iusto dignissimos nobis quasi quisquam, expedita cumque. Placeat rem veniam dolore sunt, fugit rerum.</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                   <div>
+                    <video width="100%" height="420px" autoplay loop muted >
+                        <source src="image/video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                   </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section>
+        <div class="row adds">
+            <marquee>
+                <ul style="display: inline-flex; font-size: 20px; color: #cc3f47;">
+    
+                    <li>
+                       <div style="height: 120px; width: 150px;">
+                        <img src="image/spotify.png"  width="100%" height="100% " style="background-size: contain;"> 
+                       </div>
+                    </li>
+                    <li>
+                        <div style="height: 110px; width: 110px;">
+                         <img src="image/imusic.png"  width="100%" height="100% " style="background-size: contain;"> 
+                        </div>
+                     </li>
+                     <li>
+                        <div style="height: 120px; width: 150px;">
+                         <img src="image/netflix.png"  width="100%" height="100% " style="background-size: contain;"> 
+                        </div>
+                     </li>
+                     <li>
+                        <div style="height: 120px; width: 150px;">
+                         <img src="image/sony.png"  width="100%" height="100% " style="background-size: contain;"> 
+                        </div>
+                     </li>
+                     <li>
+                        <div style="height: 120px; width: 150px;">
+                         <img src="image/imagin.png"  width="100%" height="100% " style="background-size: contain;"> 
+                        </div>
+                     </li>
+                </ul>
+            </marquee>
+        </div>
+    </section>
+
+<section>
+    <div class="row">
+        <footer class="footer-section">
+          <div class="container">
+              <div class="footer-cta pt-5 pb-5">
+                  <div class="row">
+                      <div class="col-xl-4 col-md-4 mb-30">
+                          <div class="single-cta">
+                              <i class="fas fa-map-marker-alt" style="color:#cc3f47;"></i>
+                              <div class="cta-text">
+                                  <h4 style="color: #fff;">Find us</h4>
+                                  <span style="color: #fff;">BELLEVUE, WASHINGTON
+                                    15500 SE 30th Place, Suite 110
+                                    Bellevue, WA 98007</span>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-xl-4 col-md-4 mb-30">
+                          <div class="single-cta">
+                              <i class="fas fa-phone" style="color: #cc3f47;"></i>
+                              <div class="cta-text">
+                                  <h4 style="color: white;">Call us</h4>
+                                  <span style="color: white;">9876543210 0</span>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-xl-4 col-md-4 mb-30">
+                          <div class="single-cta">
+                              <i class="far fa-envelope-open" style="color: #cc3f47;"></i>
+                              <div class="cta-text">
+                                  <h4 style="color: #fff;">Mail us</h4>
+                                  <span style="color: #fff;">MusicFreaks@gmail.com</span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="footer-content pt-5 pb-5">
+                  <div class="row">
+                      <div class="col-xl-4 col-lg-4 mb-50">
+                          <div class="footer-widget">
+                              <div class="footer-logo">
+                                  <a href="index.html"><img src="img/logo.png" class="img-fluid" alt="logo"></a>
+                              </div>
+                              <!-- <div class="footer-text">
+                                  <p>Lorem ipsum dolor sit amet, consec tetur adipisicing elit, sed do eiusmod tempor incididuntut consec tetur adipisicing
+                                  elit,Lorem ipsum dolor sit amet.</p>
+                              </div> -->
+                              <div class="footer-social-icon">
+                                  <span>Follow us</span>
+                                  <a href="#"><i class="fab fa-facebook-f facebook-bg"></i></a>
+                                  <a href="#"><i class="fab fa-twitter twitter-bg"></i></a>
+                                  <a href="#"><i class="fab fa-google-plus-g google-bg"></i></a>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
+                          <div class="footer-widget">
+                              <div class="footer-widget-heading">
+                                  <h3>Useful Links</h3>
+                              </div>
+                              <ul>
+                                  <li><a href="#">Home</a></li>
+                                  <li><a href="#">about</a></li>
+                                  <li><a href="#">Events</a></li>
+                                  <li><a href="#">Concert</a></li>
+                                  <li><a href="#">Music</a></li>
+                                  <li><a href="#">Album Songs</a></li>
+                                  <li><a href="#">DJ-Experience</a></li>
+                                  <li><a href="#">Expert Team</a></li>
+                                  <li><a href="#">Contact us</a></li>
+                                  <li><a href="#">Latest News</a></li>
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
+                          <div class="footer-widget">
+                              <div class="footer-widget-heading">
+                                  <h3>Subscribe</h3>
+                              </div>
+                              <div class="footer-text mb-25">
+                                  <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
+                              </div>
+                              <div class="subscribe-form">
+                                  <form action="#">
+                                      <input type="text" placeholder="Email Address">
+                                      <button><i class="fab fa-telegram-plane"></i></button>
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="copyright-area">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-xl-6 col-lg-6 text-center text-lg-left">
+                          <div class="copyright-text">
+                              <p>Copyright &copy; 2024, All Right Reserved <a href="">MusicFreaks</a></p>
+                          </div>
+                      </div>
+                      <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
+                          <div class="footer-menu">
+                              <ul>
+                                  <li><a href="#">Home</a></li>
+                                  <li><a href="#">about</a></li>
+                                  <li><a href="#">Events</a></li>
+                                  <li><a href="#">Tickets</a></li>
+                                  <li><a href="#">Contact</a></li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </footer>
+      
+      </div>
+  
+</section>
+
+
+
+
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const carousel = document.querySelector(".carousel");
+            const arrowBtns = document.querySelectorAll(".wrapper i");
+            const wrapper = document.querySelector(".wrapper");
+
+            const firstCard = carousel.querySelector(".card");
+            const firstCardWidth = firstCard.offsetWidth;
+
+            let isDragging = false,
+                startX,
+                startScrollLeft,
+                timeoutId;
+
+            const dragStart = (e) => {
+                isDragging = true;
+                carousel.classList.add("dragging");
+                startX = e.pageX;
+                startScrollLeft = carousel.scrollLeft;
+            };
+
+            const dragging = (e) => {
+                if (!isDragging) return;
+
+                // Calculate the new scroll position
+                const newScrollLeft = startScrollLeft - (e.pageX - startX);
+
+                // Check if the new scroll position exceeds 
+                // the carousel boundaries
+                if (newScrollLeft <= 0 || newScrollLeft >=
+                    carousel.scrollWidth - carousel.offsetWidth) {
+
+                    // If so, prevent further dragging
+                    isDragging = false;
+                    return;
+                }
+
+                // Otherwise, update the scroll position of the carousel
+                carousel.scrollLeft = newScrollLeft;
+            };
+
+            const dragStop = () => {
+                isDragging = false;
+                carousel.classList.remove("dragging");
+            };
+
+            const autoPlay = () => {
+
+                // Return if window is smaller than 800
+                if (window.innerWidth < 800) return;
+
+                // Calculate the total width of all cards
+                const totalCardWidth = carousel.scrollWidth;
+
+                // Calculate the maximum scroll position
+                const maxScrollLeft = totalCardWidth - carousel.offsetWidth;
+
+                // If the carousel is at the end, stop autoplay
+                if (carousel.scrollLeft >= maxScrollLeft) return;
+
+                // Autoplay the carousel after every 2500ms
+                timeoutId = setTimeout(() =>
+                    carousel.scrollLeft += firstCardWidth, 2500);
+            };
+
+            carousel.addEventListener("mousedown", dragStart);
+            carousel.addEventListener("mousemove", dragging);
+            document.addEventListener("mouseup", dragStop);
+            wrapper.addEventListener("mouseenter", () =>
+                clearTimeout(timeoutId));
+            wrapper.addEventListener("mouseleave", autoPlay);
+
+            // Add event listeners for the arrow buttons to 
+            // scroll the carousel left and right
+            arrowBtns.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    carousel.scrollLeft += btn.id === "left" ?
+                        -firstCardWidth : firstCardWidth;
+                });
+            });
+        });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/html" src="jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
